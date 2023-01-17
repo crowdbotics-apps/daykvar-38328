@@ -13,10 +13,7 @@ const SignIn = () => {
       <View>
         <View style={styles.textBox}>
           <Text style={styles.welcomeText}>Welcome Back</Text>
-          <Text style={styles.text}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor
-          </Text>
+          <Text style={styles.text}>Please make sure to protect your information.</Text>
         </View>
         <View style={styles.footerContainer}>
           <View style={styles.mb35}>
