@@ -4,339 +4,221 @@ import {
   View,
   StyleSheet,
   Image,
-  TextInput,
-  FlatList
+  ImageBackground,
+  Pressable
 } from "react-native";
 
-const CourseCategoryList = () => {
-  const [search, setSearch] = useState("");
-  const [courseList, setCourseList] = useState([]);
+const ChooseDriver = () => {
+  const [driver, setDriver] = useState({});
+  const [rideDetails, setRideDetails] = useState({});
   useEffect(() => {
-    setCourseList([
-      {
-        id: 1,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: false,
-        image: require("./assets/courseThumbnail1.png")
-      },
-      {
-        id: 2,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: true,
-        image: require("./assets/courseThumbnail2.png")
-      },
-      {
-        id: 3,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: true,
-        image: require("./assets/courseThumbnail1.png")
-      },
-      {
-        id: 4,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: true,
-        image: require("./assets/courseThumbnail2.png")
-      },
-      {
-        id: 5,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: true,
-        image: require("./assets/courseThumbnail1.png")
-      },
-      {
-        id: 6,
-        name: "Course Name",
-        description: "Web Design for Beginners",
-        enrolledCount: 48,
-        rating: 4.7,
-        isfavorite: true,
-        image: require("./assets/courseThumbnail2.png")
-      }
-    ]);
+    setDriver({
+      name: "Username",
+      image: require("./assets/driverImage.png")
+    });
+    setRideDetails({
+      rideType: "car",
+      distance: "2.0",
+      time: "2 min",
+      bill: "$18"
+    });
   }, []);
-  return (
-    <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Input
-          text={"Search"}
-          value={search}
-          onChange={x => setSearch(x)}
-          icon={require("./assets/searchBarIcon.png")}
-        />
-      </View>
-      <View style={styles.separator}>
-        <Text style={styles.separatorText}>Design and User Experience</Text>
-        <Image source={require("./assets/filterIcon.png")} />
-      </View>
-      <FlatList
-        style={styles.courseList}
-        data={courseList}
-        renderItem={({ item }) => <Course course={item} />}
-        numColumns={2}
-        keyExtractor={item => item.id.toString()}
-        columnWrapperStyle={styles.columnWrapper}
-      />
-      <Footer
-        images={[
-          require("./assets/homeIconActive.png"),
-          require("./assets/starIcon.png"),
-          require("./assets/searchIcon.png"),
-          require("./assets/settingsIcon.png"),
-          require("./assets/bellIcon.png")
-        ]}
-        active={3}
-        hideTitle={true}
-      />
-    </View>
-  );
-};
-
-const Course = ({ course }) => {
-  return (
-    <View style={courseStyles.container}>
-      <Image source={course.image} style={styles.courseImage} />
-      <Text style={courseStyles.name}>{course.name}</Text>
-      <Text style={courseStyles.description}>{course.description}</Text>
-      <View style={courseStyles.enrolledInfoContainer}>
-        <Image source={require("./assets/enrolledUsers.png")} />
-        <Text style={courseStyles.enrolledInfoText}>
-          {course.enrolledCount} enrolled
-        </Text>
-      </View>
-      {course.isfavorite
-        ? (
-        <Image
-          source={require("./assets/favIcon.png")}
-          style={courseStyles.favIcon}
-        />
-          )
-        : null}
-      <Text style={courseStyles.rating}>{course.rating}</Text>
-    </View>
-  );
-};
-
-const courseStyles = StyleSheet.create({
-  container: {
-    marginBottom: 10
-  },
-  name: {
-    fontSize: 14,
-    marginVertical: 5,
-    fontWeight: "bold"
-  },
-  description: {
-    fontSize: 12,
-    color: "#B6B6B6",
-    marginBottom: 5
-  },
-  enrolledInfoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 5
-  },
-  enrolledInfoText: {
-    fontSize: 12,
-    color: "#27AE60",
-    marginLeft: 5
-  },
-  favIcon: {
-    position: "absolute",
-    left: 10,
-    top: 10
-  },
-  rating: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    fontSize: 10,
-    color: "#000",
-    backgroundColor: "#FFD500",
-    paddingHorizontal: 5,
-    paddingVertical: 1,
-    borderRadius: 50
+  let rideImage = null;
+  if (rideDetails.rideType === "car") {
+    rideImage = require("./assets/carIcon.png");
+  } else if (rideDetails.rideType === "bike") {
+    rideImage = require("./assets/bikeIcon.png");
   }
-});
-
+  return (
+    <ImageBackground
+      style={styles.container}
+      source={require("./assets/mapBackground.png")}
+      resizeMode="cover">
+      <View style={styles.header}>
+        <Pressable>
+          <Image source={require("./assets/backIcon.png")} />
+        </Pressable>
+        <Pressable style={styles.menuIcon}>
+          <Image source={require("./assets/menuIcon.png")} />
+        </Pressable>
+      </View>
+      <View style={styles.body}>
+        <View style={styles.cardContainer}>
+          <View style={styles.cardHeader}>
+            <Image source={driver.image} />
+            <Text style={styles.headerText}>{driver.name}</Text>
+            <Image
+              source={require("./assets/chatIcon.png")}
+              style={styles.icon}
+            />
+            <Image
+              source={require("./assets/callIcon.png")}
+              style={styles.icon}
+            />
+          </View>
+          <View style={styles.recommendationTab}>
+            <Image
+              source={require("./assets/userImages.png")}
+              style={styles.userImages}
+            />
+            <Text>+30 recommendations</Text>
+          </View>
+          <View style={styles.detailsContainer}>
+            <Image source={rideImage} style={styles.rideTypeIcon} />
+            <View style={styles.detailTab}>
+              <Text style={styles.grey}>Distance</Text>
+              <Text style={styles.grey}>{rideDetails.distance} Km</Text>
+            </View>
+            <View style={styles.detailTab}>
+              <Text style={styles.grey}>Time</Text>
+              <Text style={styles.grey}>{rideDetails.time}</Text>
+            </View>
+            <View style={styles.detailTab}>
+              <Text style={styles.grey}>Bill</Text>
+              <Text style={styles.grey}>{rideDetails.bill}</Text>
+            </View>
+          </View>
+          <View style={styles.button}>
+            <Button buttonText={"Confirm"} />
+          </View>
+          <Image
+            source={require("./assets/tabsIcon.png")}
+            style={styles.tabsIcon}
+          />
+        </View>
+      </View>
+    </ImageBackground>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff"
   },
-  heading: {
-    fontSize: 20
-  },
-  searchContainer: {
-    paddingHorizontal: 20
-  },
-  separator: {
+  header: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 10
   },
-  separatorText: {
-    fontSize: 18,
-    color: "#22292E"
+  menuIcon: {
+    elevation: 5,
+    backgroundColor: "rgba(255,255,255,0.5)",
+    borderRadius: 50
   },
-  courseList: {
+  body: {
     flex: 1,
-    marginBottom: 60
+    justifyContent: "flex-end"
   },
-  columnWrapper: {
-    justifyContent: "space-around"
-  }
-});
-
-export default CourseCategoryList;
-
-const Footer = props => {
-  const generator = props.hideTitle ? props.images : props.titles;
-  return (
-    <View style={footerStyles.footer}>
-      {generator.map((title, index) => (
-        <View style={footerStyles.footerItem} key={index}>
-          <Image
-            style={footerStyles.footerImage}
-            source={props.images[index]}
-          />
-          {props.hideTitle
-            ? null
-            : (
-            <Text
-              style={[
-                footerStyles.footerItemText,
-                index === props.active ? footerStyles.active : null
-              ]}>
-              {title}
-            </Text>
-              )}
-        </View>
-      ))}
-    </View>
-  );
-};
-
-const footerStyles = StyleSheet.create({
-  footer: {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: 60,
-    backgroundColor: "#C4C4C4",
+  cardContainer: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    height: 350,
+    marginHorizontal: 15,
+    marginBottom: 20,
+    padding: 20,
+    shadowColor: "rgba(0,0,0,0.5)",
+    elevation: 10
+  },
+  cardHeader: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20
+    paddingBottom: 15,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1
   },
-  footerItem: {
+  headerText: {
+    fontSize: 15,
+    flex: 1,
+    marginLeft: 20
+  },
+  icon: {
+    marginRight: 10
+  },
+  recommendationTab: {
+    flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    height: "100%"
+    paddingVertical: 20,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1
   },
-  footerItemText: {
-    fontSize: 13,
-    color: "#fff",
-    marginTop: 5
+  userImages: {
+    marginRight: 10
   },
-  footerImage: {
-    width: 20,
-    height: 20,
-    resizeMode: "contain"
+  detailsContainer: {
+    flexDirection: "row",
+    // justifyContent: "space-between",
+    alignItems: "center",
+    height: 100
   },
-  active: {
-    color: "#000"
+  detailTab: {
+    justifyContent: "space-around",
+    height: 50,
+    alignItems: "center",
+    flex: 1,
+    marginLeft: 30
+  },
+  grey: {
+    color: "#313633"
+  },
+  button: {
+    marginTop: 10
+  },
+  tabsIcon: {
+    position: "absolute",
+    bottom: -7,
+    right: "50%"
   }
 });
 
-const Input = props => {
-  return (
-    <View style={inputStyles.inputContainer}>
-      {props.text
-        ? (
-        <Text style={inputStyles.inputText}>{props.text}</Text>
-          )
-        : null}
+export default ChooseDriver;
 
-      <TextInput
-        style={inputStyles.input}
-        placeholder={props.placeholder ? props.placeholder : "Enter"}
-        value={props.value}
-        onChangeText={text => props.onChange(text)}
-        placeholderTextColor={
-          props.placeholderTextColor ? props.placeholderTextColor : "#9B9B9B"
-        }
-        editable={props.editable !== false}
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
-      {props.errorText
-        ? (
-        <Text style={inputStyles.error}>{props.errorText}</Text>
-          )
-        : null}
-      {props.icon
-        ? (
-        <Image
-          source={props.icon}
-          style={
-            props.text ? inputStyles.iconWithText : inputStyles.iconWithoutText
-          }
-        />
-          )
-        : null}
-      <View style={styles.children}>{props.children}</View>
+const Button = params => {
+  const btnStyle = {
+    backgroundColor: params.outline ? "#fff" : "#000",
+    borderColor: params.outline ? "#000" : "#fff",
+    borderWidth: 1
+  };
+  const btnText = {
+    color: params.outline ? "#000" : "#fff"
+  };
+  return (
+    <View style={buttonStyles.btnContainer}>
+      <Pressable style={[buttonStyles.btn, btnStyle]} onPress={params.onPress}>
+        <Text style={[buttonStyles.btnText, btnText]}>{params.buttonText}</Text>
+        <View style={styles.childrenContainer}>{params.children}</View>
+      </Pressable>
     </View>
   );
 };
 
-const inputStyles = StyleSheet.create({
-  inputContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    marginHorizontal: 5
+const buttonStyles = StyleSheet.create({
+  btnContainer: {
+    paddingHorizontal: 20,
+    justifyContent: "center"
   },
-  inputText: {
-    fontSize: 16,
-    marginLeft: 20,
-    color: "#111112"
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#e6e6e6",
-    borderRadius: 10,
-    padding: 10,
-    paddingLeft: 20,
-    marginVertical: 10,
+  btn: {
+    backgroundColor: "black",
+    height: 50,
     width: "100%",
-    height: 50
+    padding: 10,
+    paddingHorizontal: 25,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    shadowColor: "rgba(0, 0, 0, 0.2)",
+    elevation: 10,
+    flexDirection: "row"
   },
-  iconWithText: {
-    position: "absolute",
-    right: 30,
-    top: 50
+  btnText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold"
   },
-  iconWithoutText: {
-    position: "absolute",
-    right: 30,
-    top: 28
-  },
-  children: {}
+  childrenContainer: {
+    justifyContent: "center",
+    alignItems: "center"
+  }
 });
